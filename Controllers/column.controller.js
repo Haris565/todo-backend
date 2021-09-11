@@ -37,7 +37,28 @@ const getColumn = async (req,res) => {
 }
 
 
+const setTitle = async (req,res)=> {
+    const {title, id} = req.body;
+    try{
+        let findColumn = await columnSchema.findById(req.body.id);
+        if(findColumn){
+            findColumn.title=title
+            let updated = await findColumn.save()
+            res.status(200).json(updated.title)
+        }
+        else {
+            return res.status(500).json("Cant update ")
+        }
+        
+    }
+    catch(err){
+
+    }
+}
+
+
 module.exports = {
     createColumn,
-    getColumn
+    getColumn,
+    setTitle
 };
